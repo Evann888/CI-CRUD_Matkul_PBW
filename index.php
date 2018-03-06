@@ -1,3 +1,20 @@
+<?php
+include 'class/action.php';
+
+if(!isset($_SESSION["Login"])){
+  header("Location: login.php");
+  exit;
+}
+
+if(isset($_POST["submitc"])){
+  if(!isset($_SESSION["Login"])){
+    echo "<script>
+            alert('Mohon Login terlebih dahulu');
+          </script>";
+  }
+}
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -150,14 +167,37 @@
     <form class="" action="class/action.php" method="post">
       <div class="form-group container scroll">
         <label for="comment">Comment:</label>
-        <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+        <textarea placeholder="1 account 1 comment :)" class="form-control" rows="5" id="comment" name="comment"></textarea>
       </div>
 
       <div class="" style="text-align:center">
-          <button class="btn btn-primary" type="submit" >Submit</button>
+          <button class="btn btn-primary" name="submitc"  type="submit" >Submit</button>
       </div>
     </form>
 
+      <form class="" action="logout.php" method="post">
+        <button class="btn btn-primary" name="submitc"  type="submit" >Logout</button>
+      </form>
+      
+      <div class="page-header bordercolor">
+        <h2>Komentar</h2>
+      </div>
+
+      <table class="table table-bordered" >
+        <tr>
+          <th>Nama</th>
+          <th>Komentar</th>
+        </tr>
+        <?php
+          $barisan_data = $obj -> show_record("data");
+          foreach ($barisan_data as $row) {
+
+        ?>
+        <tr>
+          <td><?php echo $row["Nama"];?> </td>
+          <td><?php  echo $row["Komentar"]; }?></td>
+        </tr>
+      </table>
 
 
     <!-- Footer -->
@@ -180,28 +220,3 @@
   </body>
 
 </html>
-
-<!-- Biar miring <section class="showcase">
-  <div class="container p-0">
-    <div class="row no-gutters">
-      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-        <h2>Seleksi Masuk</h2>
-        <p class="lead mb-0"> <!-- mb0 = margin botton 0-->
-          <!-- <div style="text-align:justify">
-            <ul>
-              <li>SNMPTN ( <a href="https://smits.its.ac.id/sarjana/#snmptn">https://smits.its.ac.id/sarjana/#snmptn</a>)</li>
-              <li>SBMPTN ( <a href="https://smits.its.ac.id/sarjana/#sbmptn">https://smits.its.ac.id/sarjana/#sbmptn</a>)</li>
-              <li>PKM  ( <a href="https://smits.its.ac.id/sarjana/#pkm">https://smits.its.ac.id/sarjana/#pkm</a>) </li>
-            </ul>
-          </div>
-        </p>
-      </div>
-    </div>
-
-    <div class="row no-gutters">
-      <div class="col-lg-6 text-white showcase-img"></div>
-      <div class="col-lg-6 my-auto showcase-text">
-        <h2>Hubungi kami</h2>
-            <p>Email : <strong>teknologi.informasi@its.ac.id</strong> </p>
-    </div> -->
-<!-- </section> -->

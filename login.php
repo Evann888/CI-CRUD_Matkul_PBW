@@ -1,3 +1,33 @@
+<?php
+session_start();
+  require 'function.php';
+
+if(isset($_POST['login'])) {
+  $username = $_POST["username"];
+  $_SESSION['username'] = $username;
+  $password = $_POST["password"];
+  $result = mysqli_query($conn, "SELECT * FROM data WHERE Nama = '$username'");
+    var_dump($result);
+  if(mysqli_num_rows($result) === 1){
+    // $row =  mysqli_fetch_assoc($result); //jadi ke arr assoc
+      $_SESSION["Login"] = true; //1 terus masuk ke atas
+      if($_SESSION["Login"] = true){
+        header("Location: index.php");
+        exit;
+      }
+    }
+  }
+  if(isset($_POST["register"])){
+      header("Location: register.php");
+  }
+
+// if(isset($_SESSION["Login"])){
+//   header("Location:index.php");
+//   exit;
+// }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,10 +56,10 @@
         <?php endif; ?>
 				<form action="" class="loginForm" method="POST">
 					<div class="input-group">
-						<input type="text" id="name" class="form-control" placeholder="Username" name="username">
+						<input type="text" id="name" class="form-control" placeholder="Username" name="username" >
 						<input type="password" id="paw" class="form-control" placeholder="Password" name="password">
-            <input type="checkbox" name="remember">
-            <label>Remember Me</label>
+            <!-- <input type="checkbox" name="remember">
+            <label>Remember Me</label> -->
 						<input type="submit" id="submit" class="form-control" value="Login" name="login">
             <input type="submit" id="submit" class="form-control" value="Buat Akun" name="register" >
 					</div>

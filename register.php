@@ -1,7 +1,7 @@
 <?php
   require 'function.php';
   // validate($_POST);
-  if(isset($_POST["Sregis"])){
+  if(isset($_POST["submit"])){
     if(validate($_POST)){
       if(register($_POST) > 0){
           echo "<script>
@@ -54,7 +54,7 @@
 </style>
 <body>
 
-  <form  action="" method="POST">
+  <form  action="class/action.php" method="POST">
     <div class="col-md-4 col-md-offset-4">
       <h3 style="text-align:center; color:rgb(238, 221, 68)">Registrasi Akun</h3>
         <div class="form-group">
@@ -63,12 +63,9 @@
          <br>
          <label> Password : </label>
          <input type="password" class="form-control" placeholder="Password" name="password" required>
-         <br>
-         <label> Konfirmasi Password : </label>
-         <input type="password" class="form-control" placeholder="Konfirmasi Password" name="password2" required>
        </div>
        <div class="text-center">
-         <button id="submit" type="submit" class="btn btn-primary active btn-block" name="Sregis" onclick="";>Submit</button>
+         <button id="submit" type="submit" class="btn btn-primary active btn-block" name="submit" onclick="test()";>Submit</button>
        </div>
     </div>
 
