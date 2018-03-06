@@ -22,16 +22,3 @@
 
 
 })(jQuery); // End of use strict
-
-//parallax
-$(window).scroll(function(){
-  var wScroll = $(this).scrollTop;
-  console.log(wScroll);
-  if(wScroll>100){
-    console.log('ok');
-  }
-  if(wScroll > $('#profile').offset().top-250){
-    $('img.hilang').addClass('muncul');
-  }
-
-});

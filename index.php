@@ -25,11 +25,9 @@
     <link href="css/grayscale.css" rel="stylesheet">
 
 
-
   </head>
 
   <body id="page-top">
-
     <!-- Intro Header -->
     <header class="masthead">
       <div class="intro-body">
@@ -148,6 +146,17 @@
         </div>
       </div>
     </section>
+
+    <form class="" action="class/action.php" method="post">
+      <div class="form-group container scroll">
+        <label for="comment">Comment:</label>
+        <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+      </div>
+
+      <div class="" style="text-align:center">
+          <button class="btn btn-primary" type="submit" >Submit</button>
+      </div>
+    </form>
 
 
 

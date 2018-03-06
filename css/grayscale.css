@@ -288,11 +288,3 @@ img::-moz-selection {
 .bordercolor{
   border-color: #66ccff;
 }
-
-img.hilang{
-  opacity: 0;
-}
-
-.muncul{
-  opacity: 1;
-}
