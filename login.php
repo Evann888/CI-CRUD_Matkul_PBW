@@ -7,7 +7,7 @@ if(isset($_POST['login'])) {
   $_SESSION['username'] = $username;
   $password = $_POST["password"];
   $result = mysqli_query($conn, "SELECT * FROM data WHERE Nama = '$username'");
-    var_dump($result);
+    // var_dump($result); exit();
   if(mysqli_num_rows($result) === 1){
     // $row =  mysqli_fetch_assoc($result); //jadi ke arr assoc
       $_SESSION["Login"] = true; //1 terus masuk ke atas
@@ -15,6 +15,10 @@ if(isset($_POST['login'])) {
         header("Location: index.php");
         exit;
       }
+    } else{
+      echo "<script>
+              alert('Password atau Username Salah');
+            </script>";
     }
   }
   if(isset($_POST["register"])){

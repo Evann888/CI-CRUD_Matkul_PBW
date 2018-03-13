@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost","root","","tekinf");
+$conn = $conn = mysqli_connect("localhost","root","","tekinf");
 
 function query($query){
   global $conn;
@@ -28,7 +28,7 @@ function query($query){
     // $password = password_hash($password, PASSWORD_DEFAULT);
 
     //cek duplikat user
-    $result = mysqli_query($conn, "SELECT Username FROM users WHERE Username = '$username'");
+    $result = mysqli_query($conn, "SELECT Name FROM data WHERE Nama = '$username'");
 
     if(mysqli_fetch_assoc($result)){
        echo "<script> alert('Username telah dipakai') </script>";

@@ -22,9 +22,7 @@ session_start();
     }
 
     public function update_comment($table,$comment){
-      var_dump($comment);
-      //"INSERT INTO table_name (, , ) VALUES ('m_name','qty')";
-      // print_r(array_keys  ($fields));
+      // var_dump($comment);
       $username = $_SESSION["username"];
       var_dump($username);
       $sql = "UPDATE ".$table;
@@ -45,9 +43,20 @@ session_start();
          $array[] = $row;
       }
       return $array;
-
     }
+
+
+      public function delete_record($table)
+      {
+        $username = $_SESSION["username"];
+        $sql = "DELETE FROM " .$table;
+        $sql .=  " WHERE Nama= '$username'";
+        $query = mysqli_query($this->conn,$sql);
+        // echo $sql; exit();
+          header("Location: ../logout.php");
+      }
   }
+
   $obj = new dataOperation;
 
   if(isset($_POST["submit"])){
@@ -71,6 +80,17 @@ session_start();
       if($obj->update_comment("data",$komentar)){
         header("Location: ../index.php");
         exit;
+      }
+  }
+
+  if(isset($_POST["submith"])){
+    // SEBENARNYA TELAH JADI ARRAY TETAPI UNTUK MENAMBAHKAN htmlspecialchars
+      if($obj->delete_record("data")){
+    
+      } else{
+        echo "<script>
+                alert('Komentar telah terhapus');
+              </script>";
       }
   }
 ?>

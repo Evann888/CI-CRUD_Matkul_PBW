@@ -1,6 +1,6 @@
 <?php
 include 'class/action.php';
-
+static $username ='$_SESSION["username"]';
 if(!isset($_SESSION["Login"])){
   header("Location: login.php");
   exit;
@@ -165,6 +165,8 @@ if(isset($_POST["submitc"])){
     </section>
 
     <form class="" action="class/action.php" method="post">
+
+      <h2>Welcome <?php $username = $_SESSION["username"]; echo "$username"; ?></h2>
       <div class="form-group container scroll">
         <label for="comment">Comment:</label>
         <textarea placeholder="1 account 1 comment :)" class="form-control" rows="5" id="comment" name="comment"></textarea>
@@ -178,26 +180,35 @@ if(isset($_POST["submitc"])){
       <form class="" action="logout.php" method="post">
         <button class="btn btn-primary" name="submitc"  type="submit" >Logout</button>
       </form>
-      
+
+      <form class="" action="class/action.php" method="post"><br>
+        <button class="btn btn-primary" name="submith"  type="submit" >Hapus Akunmu</button>
+      </form>
+
       <div class="page-header bordercolor">
         <h2>Komentar</h2>
       </div>
 
-      <table class="table table-bordered" >
+      <table class="table table-bordered table-dark " style="border-color:black;" >
         <tr>
           <th>Nama</th>
           <th>Komentar</th>
+          <!-- <th>Action</th> -->
         </tr>
         <?php
           $barisan_data = $obj -> show_record("data");
           foreach ($barisan_data as $row) {
-
         ?>
+
         <tr>
           <td><?php echo $row["Nama"];?> </td>
           <td><?php  echo $row["Komentar"]; }?></td>
+          <!-- <?php if($_SESSION("username")==$_SESSION("Login")) : ?>
+            <td> <a href="hapus.php?id=" onclick="return confirm('Yakin?')"> Hapus</a></td>
+          <?php endif; ?> -->
         </tr>
       </table>
+
 
 
     <!-- Footer -->

@@ -65,13 +65,13 @@
          <input type="password" class="form-control" placeholder="Password" name="password" required>
        </div>
        <div class="text-center">
-         <button id="submit" type="submit" class="btn btn-primary active btn-block" name="submit" onclick="test()";>Submit</button>
+         <button id="submit" type="submit" class="btn btn-primary active btn-block" name="submit" onsubmit="test()";>Submit</button>
        </div>
     </div>
 
     <script>
       function test(){
-        swal('Good job!', 'You clicked the button!', 'success');
+        swal('Good job!', 'Berhasil terdaftar', 'success');
       }
     </script>
   </form>
