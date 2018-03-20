@@ -1,37 +1,3 @@
-<?php
-session_start();
-  require 'function.php';
-
-if(isset($_POST['login'])) {
-  $username = $_POST["username"];
-  $_SESSION['username'] = $username;
-  $password = $_POST["password"];
-  $result = mysqli_query($conn, "SELECT * FROM data WHERE Nama = '$username'");
-    // var_dump($result); exit();
-  if(mysqli_num_rows($result) === 1){
-    // $row =  mysqli_fetch_assoc($result); //jadi ke arr assoc
-      $_SESSION["Login"] = true; //1 terus masuk ke atas
-      if($_SESSION["Login"] = true){
-        header("Location: index.php");
-        exit;
-      }
-    } else{
-      echo "<script>
-              alert('Password atau Username Salah');
-            </script>";
-    }
-  }
-  if(isset($_POST["register"])){
-      header("Location: register.php");
-  }
-
-// if(isset($_SESSION["Login"])){
-//   header("Location:index.php");
-//   exit;
-// }
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,14 +24,14 @@ if(isset($_POST['login'])) {
         <?php if(isset($err)) : ?>
            <p style="color : red; font-style : italic;"> Username atau password salah</p>
         <?php endif; ?>
-				<form action="" class="loginForm" method="POST">
+				<form action="<?php echo base_url(); ?> login/register" class="loginForm" method="POST">
 					<div class="input-group">
 						<input type="text" id="name" class="form-control" placeholder="Username" name="username" >
 						<input type="password" id="paw" class="form-control" placeholder="Password" name="password">
             <!-- <input type="checkbox" name="remember">
             <label>Remember Me</label> -->
 						<input type="submit" id="submit" class="form-control" value="Login" name="login">
-            <input type="submit" id="submit" class="form-control" value="Buat Akun" name="register" >
+           <input type="submit" id="submitr" class="form-control" value="Buat Akun" name="register" >
 					</div>
 				</form>
 			</div>
@@ -250,71 +216,3 @@ $(document).ready(function(){
 
 });
 </script>
-<!--
-<section id="" class="download-section content-section text-center">
-  <div class="section section-basic">
-      <div class="container">
-        <div class="title">
-            <h2>Data Anggota Perpustakaan</h2>
-        </div>
-    <form class="" action="class/action.php" method="post" enctype="multipart/form-data">
-
-
-      <div class="form-group">
-        <div class="col-sm-3">
-          <div class="form-group label-floating">
-            <label class="control-label">Nama </label>
-            <input type="text" class="form-control" name="nama" placeholder="Nama" required>
-          </div>
-        </div>
-
-        <div class="col-sm-offset-1 col-sm-3">
-          <div class="form-group label-floating">
-            <label class="control-label">Email </label>
-            <input type="text" class="form-control" name="email"  placeholder="Email"required>
-          </div>
-        </div>
-
-        <div class="col-sm-offset-1 col-sm-3">
-          <div class="form-group label-floating">
-            <label class="control-label">Alamat </label>
-            <input type="text" class="form-control" name="alamat"  placeholder="Alamat" required>
-          </div>
-        </div>
-
-        <div class="col-sm-offset-2 col-sm-3">
-          <div class="form-group label-floating">
-            <label class="control-label">NIK </label>
-            <input type="text" class="form-control" name="nik"  placeholder="NIK" required>
-          </div>
-        </div>
-
-        <div class="col-sm-offset-2 col-sm-3">
-          <div class="form-group label-floating">
-            <label class="control-label">No. Handphone </label>
-            <input type="email" class="form-control" name="nohp"  placeholder="No. Handphone">
-          </div>
-        </div>
-
-        <div class="col-sm-3"><br>
-          <label class="">Jenis Kelamin</label>
-           <div class="radio">
-             <label>
-               <input type="radio" name="lradio" checked="true">
-                Laki-laki
-             </label>
-            <label>
-             <input type="radio" name="pradio">
-                Perempuan
-            </label>
-           </div>
-       </div>
-
-       <div class="col-md-12">
-           <button class="btn btn-primary" name="submit"  type="submit" >Submit</button>
-       </div>
-     </div>
-     </form>
-    </div>
-  </div>
-</section> -->

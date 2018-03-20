@@ -1,233 +1,315 @@
 <?php
-include 'class/action.php';
-static $username ='$_SESSION["username"]';
-if(!isset($_SESSION["Login"])){
-  header("Location: login.php");
-  exit;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 1.0.0
+ * @filesource
+ */
+
+/*
+ *---------------------------------------------------------------
+ * APPLICATION ENVIRONMENT
+ *---------------------------------------------------------------
+ *
+ * You can load different configurations depending on your
+ * current environment. Setting the environment also influences
+ * things like logging and error reporting.
+ *
+ * This can be set to anything, but default usage is:
+ *
+ *     development
+ *     testing
+ *     production
+ *
+ * NOTE: If you change these, also change the error_reporting() code below
+ */
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
+/*
+ *---------------------------------------------------------------
+ * ERROR REPORTING
+ *---------------------------------------------------------------
+ *
+ * Different environments will require different levels of error reporting.
+ * By default development will show errors but testing and live will hide them.
+ */
+switch (ENVIRONMENT)
+{
+	case 'development':
+		error_reporting(-1);
+		ini_set('display_errors', 1);
+	break;
+
+	case 'testing':
+	case 'production':
+		ini_set('display_errors', 0);
+		if (version_compare(PHP_VERSION, '5.3', '>='))
+		{
+			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
+		}
+		else
+		{
+			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
+		}
+	break;
+
+	default:
+		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		echo 'The application environment is not set correctly.';
+		exit(1); // EXIT_ERROR
 }
 
-if(isset($_POST["submitc"])){
-  if(!isset($_SESSION["Login"])){
-    echo "<script>
-            alert('Mohon Login terlebih dahulu');
-          </script>";
-  }
-}
- ?>
+/*
+ *---------------------------------------------------------------
+ * SYSTEM DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "system" directory.
+ * Set the path if it is not in the same directory as this file.
+ */
+	$system_path = 'system';
 
-<!DOCTYPE html>
-<html lang="en">
+/*
+ *---------------------------------------------------------------
+ * APPLICATION DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * If you want this front controller to use a different "application"
+ * directory than the default one you can set its name here. The directory
+ * can also be renamed or relocated anywhere on your server. If you do,
+ * use an absolute (full) server path.
+ * For more info please see the user guide:
+ *
+ * https://codeigniter.com/user_guide/general/managing_apps.html
+ *
+ * NO TRAILING SLASH!
+ */
+	$application_folder = 'application';
 
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Departemen Teknologi Informasi</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!--  Bootstrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- Custom fonts for this template -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Cabin:700" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this template -->
-    <link href="css/grayscale.css" rel="stylesheet">
+/*
+ *---------------------------------------------------------------
+ * VIEW DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * If you want to move the view directory out of the application
+ * directory, set the path to it here. The directory can be renamed
+ * and relocated anywhere on your server. If blank, it will default
+ * to the standard location inside your application directory.
+ * If you do move this, use an absolute (full) server path.
+ *
+ * NO TRAILING SLASH!
+ */
+	$view_folder = '';
 
 
-  </head>
+/*
+ * --------------------------------------------------------------------
+ * DEFAULT CONTROLLER
+ * --------------------------------------------------------------------
+ *
+ * Normally you will set your default controller in the routes.php file.
+ * You can, however, force a custom routing by hard-coding a
+ * specific controller class/function here. For most applications, you
+ * WILL NOT set your routing here, but it's an option for those
+ * special instances where you might want to override the standard
+ * routing in a specific front controller that shares a common CI installation.
+ *
+ * IMPORTANT: If you set the routing here, NO OTHER controller will be
+ * callable. In essence, this preference limits your application to ONE
+ * specific controller. Leave the function name blank if you need
+ * to call functions dynamically via the URI.
+ *
+ * Un-comment the $routing array below to use this feature
+ */
+	// The directory name, relative to the "controllers" directory.  Leave blank
+	// if your controller is not in a sub-directory within the "controllers" one
+	// $routing['directory'] = '';
 
-  <body id="page-top">
-    <!-- Intro Header -->
-    <header class="masthead">
-      <div class="intro-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h1 class="brand-header"><br>Departemen Teknologi Informasi</h1>
-              <p class="intro-text">Institut Teknologi Sepuluh Nopember <br>Surabaya</p>
-              <a href="#about" class="btn btn-circle js-scroll-trigger">
-                <i class="fa fa-angle-double-down animated"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+	// The controller class file name.  Example:  mycontroller
+	// $routing['controller'] = '';
 
-    <!-- About Section -->
-    <section id="about" class="content-section text-center"> <!-- karena ada content-section jd auto atur height-->
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 col-lg-5 panel panel-info panelbg">
-              <div class="panel-heading">
-                  <h2> Visi</h2>
-              </div>
-            <p><br>Menjadi Program Studi Teknologi Informasi yang unggul dalam bidang keamanan siber dan Teknologi
-               berbasis internet<i>(internet of Things)</i> untuk mendukung pembangunan <i>Smart City</i>
-               secara berkelanjutan</p>
-          </div>
-          <div class="col-sm-6 col-lg-offset-1 panel panel-info panelbg">
-              <div class="panel-heading">
-                  <h2> Misi</h2>
-              </div>
-            <p>
-              <div style="text-align: justify" id="besar">
-                <ol>
-                  <li>Menyelenggarakan pendidikan dan pengajaran Teknologi Informasi dengan menggunakan kurikulum yang adaptif, berorientasi ke masa depan dan didukung SDM yang berkualitas serta fasilitas yang memadai.</li>
-                  <li>Melaksanakan penelitian yang bermutu di bidang Keamanan Siber dan <i>Internet of Things</i> untuk Teknologi <i>Smart City.</i> </li>
-                  <li>Menjalin kemitraan dengan instansi dalam maupun luar negeri. </li>
-                  <li>Menyelenggarakan pengabdian kebada masyarakat berupa pelatihan, penyuluhan, penerapan hasil penelitian untuk pengembangan potensi dan pemberdayaan masyarakat daerah.</li>
-                </ol>
-              </div>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+	// The controller function you wish to be called.
+	// $routing['function']	= '';
 
-    <!-- Download Section -->
-    <section id="profile" class="download-section content-section text-center">
-      <div class="page-header">
-        <h1>Profil Lulusan</h1>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="container">
-            <div class="col-lg-4">
-                <h2>Spesialis Keamanan Siber</h2>
-              <p><i>(Cyber Security Specialist)</i></p>
-              <img src="img/ka.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
-            </div>
-            <div class="col-lg-4">
-              <h2>Analis Keamanan Aplikasi</h2>
-              <p><i>(Application Security Analyst)</i></p>
-              <img src="img/ks.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
-            </div>
-            <div class="col-lg-4">
-              <h2>Spesialis Integrasi Sistem</h2>
-              <p><i>(Sistem Integrator Specialist)</i></p>
-              <img src="img/is.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
-            </div>
 
-            <div class="col-lg-offset-2 col-lg-4">
-              <h2><br>Pengembang layanan awan</h2>
-              <p><i>(Cloud Service Developer)</i></p>
-              <img src="img/cc.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
-            </div>
-
-            <div class="col-lg-offset-1 col-lg-4">
-              <h2><br>Spesialis Internet of Things</h2>
-              <p><i>(IoT Specialist)</i></p>
-              <img src="img/iot.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="content-section text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="page-header bordercolor">
-              <h2>Seleksi Masuk</h2>
-            </div>
-            <div style="text-align:justify">
-              <ul>
-                <li>SNMPTN ( <a href="https://smits.its.ac.id/sarjana/#snmptn">https://smits.its.ac.id/sarjana/#snmptn</a>)</li>
-                <li>SBMPTN ( <a href="https://smits.its.ac.id/sarjana/#sbmptn">https://smits.its.ac.id/sarjana/#sbmptn</a>)</li>
-                <li>PKM  ( <a href="https://smits.its.ac.id/sarjana/#pkm">https://smits.its.ac.id/sarjana/#pkm</a>) </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="page-header bordercolor">
-              <h2>Hubungi Kami</h2>
-            </div>
-            <p>Email : <strong>teknologi.informasi@its.ac.id</strong> </p>
-          </div>
-          <!-- Map Section -->
-          <div class="col-lg-4" id="google-maps">
-              <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7915.23497771358!2d112.79156582375936!3d-7.284288475946817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fa1323221a93%3A0x306c3c99adedb258!2sSepuluh+Nopember+Institute+of+Technology!5e0!3m2!1sen!2sid!4v1519734716299" width="600" height="400" frameborder="0" style="border:0" allowfullscreen></iframe> -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <form class="" action="class/action.php" method="post">
-
-      <h2>Welcome <?php $username = $_SESSION["username"]; echo "$username"; ?></h2>
-      <div class="form-group container scroll">
-        <label for="comment">Comment:</label>
-        <textarea placeholder="1 account 1 comment :)" class="form-control" rows="5" id="comment" name="comment"></textarea>
-      </div>
-
-      <div class="" style="text-align:center">
-          <button class="btn btn-primary" name="submitc"  type="submit" >Submit</button>
-      </div>
-    </form>
-
-      <form class="" action="logout.php" method="post">
-        <button class="btn btn-primary" name="submitc"  type="submit" >Logout</button>
-      </form>
-
-      <form class="" action="class/action.php" method="post"><br>
-        <button class="btn btn-primary" name="submith"  type="submit" >Hapus Akunmu</button>
-      </form>
-
-      <div class="page-header bordercolor">
-        <h2>Komentar</h2>
-      </div>
-
-      <table class="table table-bordered table-dark " style="border-color:black;" >
-        <tr>
-          <th>Nama</th>
-          <th>Komentar</th>
-          <!-- <th>Action</th> -->
-        </tr>
-        <?php
-          $barisan_data = $obj -> show_record("data");
-          foreach ($barisan_data as $row) {
-        ?>
-
-        <tr>
-          <td><?php echo $row["Nama"];?> </td>
-          <td><?php  echo $row["Komentar"]; }?></td>
-          <!-- <?php if($_SESSION("username")==$_SESSION("Login")) : ?>
-            <td> <a href="hapus.php?id=" onclick="return confirm('Yakin?')"> Hapus</a></td>
-          <?php endif; ?> -->
-        </tr>
-      </table>
+/*
+ * -------------------------------------------------------------------
+ *  CUSTOM CONFIG VALUES
+ * -------------------------------------------------------------------
+ *
+ * The $assign_to_config array below will be passed dynamically to the
+ * config class when initialized. This allows you to set custom config
+ * items or override any default config values found in the config.php file.
+ * This can be handy as it permits you to share one application between
+ * multiple front controller files, with each file containing different
+ * config values.
+ *
+ * Un-comment the $assign_to_config array below to use this feature
+ */
+	// $assign_to_config['name_of_config_item'] = 'value of config item';
 
 
 
-    <!-- Footer -->
-    <footer>
-      <div class="container-fluid text-center" id="foot">
-        <p>Copyright &copy; Teknologi Informasi 2018</p>
-      </div>
-    </footer>
+// --------------------------------------------------------------------
+// END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
+// --------------------------------------------------------------------
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+/*
+ * ---------------------------------------------------------------
+ *  Resolve the system path for increased reliability
+ * ---------------------------------------------------------------
+ */
 
-    <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	// Set the current directory correctly for CLI requests
+	if (defined('STDIN'))
+	{
+		chdir(dirname(__FILE__));
+	}
 
-    <!-- Custom scripts for this template -->
-    <script src="js/grayscale.js"></script>
+	if (($_temp = realpath($system_path)) !== FALSE)
+	{
+		$system_path = $_temp.DIRECTORY_SEPARATOR;
+	}
+	else
+	{
+		// Ensure there's a trailing slash
+		$system_path = strtr(
+			rtrim($system_path, '/\\'),
+			'/\\',
+			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+		).DIRECTORY_SEPARATOR;
+	}
 
-  </body>
+	// Is the system path correct?
+	if ( ! is_dir($system_path))
+	{
+		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
+		exit(3); // EXIT_CONFIG
+	}
 
-</html>
+/*
+ * -------------------------------------------------------------------
+ *  Now that we know the path, set the main path constants
+ * -------------------------------------------------------------------
+ */
+	// The name of THIS file
+	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+
+	// Path to the system directory
+	define('BASEPATH', $system_path);
+
+	// Path to the front controller (this file) directory
+	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+
+	// Name of the "system" directory
+	define('SYSDIR', basename(BASEPATH));
+
+	// The path to the "application" directory
+	if (is_dir($application_folder))
+	{
+		if (($_temp = realpath($application_folder)) !== FALSE)
+		{
+			$application_folder = $_temp;
+		}
+		else
+		{
+			$application_folder = strtr(
+				rtrim($application_folder, '/\\'),
+				'/\\',
+				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+			);
+		}
+	}
+	elseif (is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
+	{
+		$application_folder = BASEPATH.strtr(
+			trim($application_folder, '/\\'),
+			'/\\',
+			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+		);
+	}
+	else
+	{
+		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
+		exit(3); // EXIT_CONFIG
+	}
+
+	define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
+
+	// The path to the "views" directory
+	if ( ! isset($view_folder[0]) && is_dir(APPPATH.'views'.DIRECTORY_SEPARATOR))
+	{
+		$view_folder = APPPATH.'views';
+	}
+	elseif (is_dir($view_folder))
+	{
+		if (($_temp = realpath($view_folder)) !== FALSE)
+		{
+			$view_folder = $_temp;
+		}
+		else
+		{
+			$view_folder = strtr(
+				rtrim($view_folder, '/\\'),
+				'/\\',
+				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+			);
+		}
+	}
+	elseif (is_dir(APPPATH.$view_folder.DIRECTORY_SEPARATOR))
+	{
+		$view_folder = APPPATH.strtr(
+			trim($view_folder, '/\\'),
+			'/\\',
+			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+		);
+	}
+	else
+	{
+		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		echo 'Your view folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
+		exit(3); // EXIT_CONFIG
+	}
+
+	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
+
+/*
+ * --------------------------------------------------------------------
+ * LOAD THE BOOTSTRAP FILE
+ * --------------------------------------------------------------------
+ *
+ * And away we go...
+ */
+require_once BASEPATH.'core/CodeIgniter.php';
