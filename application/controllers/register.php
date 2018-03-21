@@ -1,24 +1,34 @@
 <?php
-  require 'function.php';
+  // require 'function.php';
   // validate($_POST);
-
+defined('BASEPATH') OR exit('No direct script access allowed');
   class register extends CI_Controller{
+    public function __construct()
+    {
+      parent::__construct();
+      $this->load->library('session');
+      $this->load->model('action');
+      $this->load->helper('url_helper');
+    }
+
     public function index()
     {
+      // $data['data'] = $this->news_model->get_data();
+      // echo 'test';
+      $this->load->helper('form');
       $this->load->view('register');
-    }
-  }
+      // Load session library
 
-  if(isset($_POST["submit"])){
-    if(validate($_POST)){
-      if(register($_POST) > 0){
-          echo "<script>
-                  alert('Data berhasil ditambahkan!');
-                  document.location.href = 'login.php'
-                </script>";
-          // echo "<script>           test(); </script>";
-          // echo notification('Success!','akun akan didaftarkan','success','index.php');
-      }
+
+      $data = array(
+        'Nama' => $this->input->post('username'),
+        'Password' => $this->input->post('password')
+      );
+
+     if($this->input->method() == "post") {
+        $this->action->insert_record($data);
+        redirect('login');
+     }
     }
   }
 ?>

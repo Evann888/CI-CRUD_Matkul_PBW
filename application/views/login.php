@@ -24,14 +24,14 @@
         <?php if(isset($err)) : ?>
            <p style="color : red; font-style : italic;"> Username atau password salah</p>
         <?php endif; ?>
-				<form action="<?php echo base_url(); ?> login/register" class="loginForm" method="POST">
+			<form action="<?php echo base_url('login/aksi_login'); ?>" class="loginForm" method="post">		
 					<div class="input-group">
 						<input type="text" id="name" class="form-control" placeholder="Username" name="username" >
 						<input type="password" id="paw" class="form-control" placeholder="Password" name="password">
             <!-- <input type="checkbox" name="remember">
             <label>Remember Me</label> -->
-						<input type="submit" id="submit" class="form-control" value="Login" name="login">
-           <input type="submit" id="submitr" class="form-control" value="Buat Akun" name="register" >
+						<input type="submit" id="submitl" class="form-control" value="Login" name="login">
+            <a href="<?php echo base_url('login/register');?>" id="submit" class="form-control"  name="register" >Register</a>
 					</div>
 				</form>
 			</div>

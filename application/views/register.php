@@ -38,7 +38,7 @@
 </style>
 <body>
 
-  <form  action="class/action.php" method="POST">
+  <form  action="" method="POST">
     <div class="col-md-4 col-md-offset-4">
       <h3 style="text-align:center; color:rgb(238, 221, 68)">Registrasi Akun</h3>
         <div class="form-group">
@@ -48,15 +48,13 @@
          <label> Password : </label>
          <input type="password" class="form-control" placeholder="Password" name="password" required>
        </div>
-       <div class="text-center">
-         <button id="submit" type="submit" class="btn btn-primary active btn-block" name="submit" onsubmit="test()";>Submit</button>
-       </div>
+        <td><input type="submit" value="Tambah"></td>
     </div>
 
-    <script>
+    <!-- <script>
       function test(){
         swal('Good job!', 'Berhasil terdaftar', 'success');
       }
-    </script>
+    </script> -->
   </form>
 </body>

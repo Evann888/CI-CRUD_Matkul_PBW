@@ -1,19 +1,3 @@
-<?php
-include 'class/action.php';
-static $username ='$_SESSION["username"]';
-if(!isset($_SESSION["Login"])){
-  header("Location: login.php");
-  exit;
-}
-
-if(isset($_POST["submitc"])){
-  if(!isset($_SESSION["Login"])){
-    echo "<script>
-            alert('Mohon Login terlebih dahulu');
-          </script>";
-  }
-}
- ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +12,7 @@ if(isset($_POST["submitc"])){
     <title>Departemen Teknologi Informasi</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!--  Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,7 +23,7 @@ if(isset($_POST["submitc"])){
     <link href="https://fonts.googleapis.com/css?family=Cabin:700" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template -->
-    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>assets/css/grayscale.css" rel="stylesheet">
 
 
   </head>
@@ -104,29 +88,29 @@ if(isset($_POST["submitc"])){
             <div class="col-lg-4">
                 <h2>Spesialis Keamanan Siber</h2>
               <p><i>(Cyber Security Specialist)</i></p>
-              <img src="img/ka.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
+              <img src="<?php echo base_url();?>assets/img/ka.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
             </div>
             <div class="col-lg-4">
               <h2>Analis Keamanan Aplikasi</h2>
               <p><i>(Application Security Analyst)</i></p>
-              <img src="img/ks.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
+              <img src="<?php echo base_url();?>assets/img/ks.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
             </div>
             <div class="col-lg-4">
               <h2>Spesialis Integrasi Sistem</h2>
               <p><i>(Sistem Integrator Specialist)</i></p>
-              <img src="img/is.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
+              <img src="<?php echo base_url();?>assets/img/is.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
             </div>
 
             <div class="col-lg-offset-2 col-lg-4">
               <h2><br>Pengembang layanan awan</h2>
               <p><i>(Cloud Service Developer)</i></p>
-              <img src="img/cc.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
+              <img src="<?php echo base_url();?>assets/img/cc.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
             </div>
 
             <div class="col-lg-offset-1 col-lg-4">
               <h2><br>Spesialis Internet of Things</h2>
               <p><i>(IoT Specialist)</i></p>
-              <img src="img/iot.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
+              <img src="<?php echo base_url();?>assets/img/iot.png" class="img-thumbnail img-responsive hilang" width="304" height="236">
             </div>
           </div>
         </div>
@@ -166,7 +150,7 @@ if(isset($_POST["submitc"])){
 
     <form class="" action="class/action.php" method="post">
 
-      <h2>Welcome <?php $username = $_SESSION["username"]; echo "$username"; ?></h2>
+      <h2>Welcome <?php echo $this->session->userdata("nama"); ?></h2>
       <div class="form-group container scroll">
         <label for="comment">Comment:</label>
         <textarea placeholder="1 account 1 comment :)" class="form-control" rows="5" id="comment" name="comment"></textarea>
@@ -177,7 +161,7 @@ if(isset($_POST["submitc"])){
       </div>
     </form>
 
-      <form class="" action="logout.php" method="post">
+  	 <form action="<?php echo base_url('login/logout'); ?>" method="post">
         <button class="btn btn-primary" name="submitc"  type="submit" >Logout</button>
       </form>
 
