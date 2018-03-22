@@ -48,13 +48,17 @@
          <label> Password : </label>
          <input type="password" class="form-control" placeholder="Password" name="password" required>
        </div>
-        <td><input type="submit" value="Tambah"></td>
+        <td><input type="submit" value="Tambah" onclick="test()"></td>
     </div>
 
-    <!-- <script>
+    <script>
       function test(){
         swal('Good job!', 'Berhasil terdaftar', 'success');
       }
-    </script> -->
+    </script>
   </form>
+
+  <div class="col-md-4 col-md-offset-4">
+    <a href="<?php echo base_url('register/back'); ?>"> <td><input type="submit" value="Back"></td></a>
+  </div>
 </body>

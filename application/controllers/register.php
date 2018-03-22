@@ -17,8 +17,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       // echo 'test';
       $this->load->helper('form');
       $this->load->view('register');
-      // Load session library
-
 
       $data = array(
         'Nama' => $this->input->post('username'),
@@ -29,6 +27,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->action->insert_record($data);
         redirect('login');
      }
+    }
+
+    public function back()
+    {
+      redirect('login');
     }
   }
 ?>
