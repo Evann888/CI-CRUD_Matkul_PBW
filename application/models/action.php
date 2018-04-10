@@ -8,7 +8,8 @@
     }
 
     public function get_data(){
-      return $this->db->get('data');
+      $query =$this->db->query('SELECT * FROM data');
+      return $query->result();
     }
 
     public function insert_record($data = array()){
@@ -28,5 +29,26 @@
   	function cek_login($table,$where){
   		return $this->db->get_where($table,$where);
   	}
+
+    function report(){
+      $this->load->database();
+      $query = $this->db->query("SELECT MONTH(date) AS bulan, COUNT(*) AS nilai
+      FROM data
+      GROUP BY MONTH(date);");
+      if($query->num_rows() > 0){
+      foreach($query->result() as $data){
+          $hasil[] = $data;
+      }
+      return $hasil;
+    }
+    // return $this->db->query("SELECT * from report");
+    //
+    // if($query->num_rows() > 0){
+    //     foreach($query->result() as $data){
+    //         $hasil[] = $data;
+    //     }
+    //     return $hasil;
+    // }
+}
   }
  ?>

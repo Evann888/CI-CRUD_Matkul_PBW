@@ -1,23 +1,10 @@
 <?php
-$conn = $conn = mysqli_connect("localhost","root","","tekinf");
-
-function query($query){
-  global $conn;
-  $result = mysqli_query($conn, $query);
-  $arr = [];
-  while($isi = mysqli_fetch_assoc($result)) {
-    $arr[] = $isi;
-  }
-  return $arr;
-}
-
   function test_input($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     // $data = myqli_real_escape_string($data);
     return $data;
   }
-
 
   function register($data){
     global $conn;

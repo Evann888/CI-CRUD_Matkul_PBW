@@ -2,7 +2,7 @@
   // require 'function.php';
   // validate($_POST);
 defined('BASEPATH') OR exit('No direct script access allowed');
-  class register extends CI_Controller{
+  class Register extends CI_Controller{
     public function __construct()
     {
       parent::__construct();
@@ -20,7 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       $data = array(
         'Nama' => $this->input->post('username'),
-        'Password' => $this->input->post('password')
+        'Password' => $this->input->post('password'),
+        'date' => date("Y-m-d")
       );
 
      if($this->input->method() == "post") {

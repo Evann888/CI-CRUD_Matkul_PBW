@@ -169,6 +169,13 @@
         <button class="btn btn-primary" name="submith"  type="submit" onclick="return confirm('Are you sure?')">Hapus Akunmu</button>
       </form>
 
+      <form class="" action="<?php echo base_url('index_cont/report'); ?>" method="post">
+        <button class="btn btn-primary" name="submit"  type="submit"> Download Report</button>
+      </form>
+
+      <form class="" action="<?php echo base_url('index_cont/Grafik'); ?>" method="post">
+        <button class="btn btn-primary" name="submit"  type="submit"> Tampilkan Grafik</button>
+      </form>
       <div class="page-header bordercolor">
         <h2>Komentar</h2>
       </div>
@@ -192,7 +199,6 @@
           <?php endif; ?> -->
         </tr>
       </table>
-
 
 
     <!-- Footer -->
